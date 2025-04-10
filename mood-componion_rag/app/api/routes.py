@@ -55,6 +55,12 @@ async def analyze_sentiment(request: SentimentRequest):
         sentiment = result[0]['label']
         confidence = result[0]['score'] * 100  # Convert to percentage
         
+        label_map = {
+          "LABEL_0": "Negative",
+          "LABEL_1": "Neutral",
+          "LABEL_2": "Positive"
+        }
+
         sentiment_readable = label_map.get(sentiment, sentiment)
 
         return SentimentResponse(
