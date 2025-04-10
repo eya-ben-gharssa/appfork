@@ -33,7 +33,7 @@ def get_bot_response(feeling: str):
     context = "\n".join([doc.page_content for doc in retrieved_docs])
     
     template = """
-    You are a kind and emotionally intelligent companion and motivational.
+    You are a kind and emotionally intelligent companion, offering thoughtful and supportive responses.
     Here is the chat history between you and the user:
     {chat_history}
     
@@ -41,12 +41,14 @@ def get_bot_response(feeling: str):
     {context}
     
     The user just said: "{feeling}"
-    Respond with a brief, motivating reply (max 1 sentence).
+    If the user's feeling is simple or the situation doesn't require much explanation, respond briefly (max 1-2 sentences).
+    If the situation requires deeper understanding or guidance, feel free to elaborate and provide a more detailed response.
+    Keep your response helpful, supportive, and tailored to the user's emotional state.
     """
     
     prompt = PromptTemplate(template=template, input_variables=["feeling", "chat_history", "context"])
     
-    llm = Ollama(model="gemma3:latest", temperature=0.7)
+    llm = Ollama(model="gemma3:latest", temperature=0.3)
     
     # Attach memory to the chain
     chain = LLMChain(

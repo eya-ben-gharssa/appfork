@@ -60,14 +60,14 @@ export default function Sidebar() {
 
   return (
     <div className="w-64 h-screen flex flex-col justify-between bg-white border-r p-4">
-      <div className="flex items-center space-x-2 mb-4">
-      <Image
-    src="/mood-companion.png"
-    alt="Mood Companion"
-    width={120}
-    height={64}
-    className="rounded-full"
-  />
+      <div className="flex flex-col items-start space-y-4 mb-4">
+        <Image
+          src="/mood-componion.png"
+          alt="Mood Companion"
+          width={128}
+          height={128}
+          className="rounded-full"
+        />
       </div>
       <div>
         {/* Sentiment Analysis Section */}
@@ -76,7 +76,7 @@ export default function Sidebar() {
           {error && <p className="text-sm text-red-500">{error}</p>}
           {sentimentData && !loading && (
             <div className="text-sm">
-              <div className="text-3xl mb-2 text-center">
+              <div className="text-2xl mb-2 text-center">
                 <p>Mood: {getMoodEmoji(sentimentData.sentiment, sentimentData.confidence)}</p>
               </div>
             </div>

@@ -34,7 +34,7 @@ export default function Chat() {
         const data = await response.json()
         
         // Add bot response to chat
-        setChat(prev => [...prev, `Bot: ${data.response}`])
+        setChat(prev => [...prev, `${data.response}`])
         
         // Set context info if available
       } catch (error) {

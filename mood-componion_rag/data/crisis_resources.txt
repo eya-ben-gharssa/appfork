@@ -1,0 +1,71 @@
+Name: National Suicide Prevention Lifeline
+Contact: 1-800-273-8255
+Description: Available 24/7 for anyone in suicidal crisis or emotional distress
+Tags: suicide, crisis, depression, mental health, global
+----------------------------------------
+
+Name: Crisis Text Line
+Contact: Text HOME to 741741
+Description: Free 24/7 text support for people in crisis
+Tags: suicide, crisis, depression, mental health, text, global
+----------------------------------------
+
+Name: International Association for Suicide Prevention
+Contact: https://www.iasp.info/resources/Crisis_Centres/
+Description: Global directory of crisis centers
+Tags: suicide, crisis, international, global, directory
+----------------------------------------
+
+Name: Veterans Crisis Line
+Contact: 1-800-273-8255 (Press 1)
+Description: Crisis support for veterans and their loved ones
+Tags: veterans, military, united states, us, ptsd
+----------------------------------------
+
+Name: Trevor Project
+Contact: 1-866-488-7386
+Description: Crisis intervention for LGBTQ+ youth
+Tags: lgbtq, youth, teenager, united states, us, identity
+----------------------------------------
+
+Name: SAMHSA's National Helpline
+Contact: 1-800-662-4357
+Description: Treatment referral for mental health and substance use disorders
+Tags: substance abuse, addiction, mental health, united states, us
+----------------------------------------
+
+Name: NYC Well
+Contact: 1-888-NYC-WELL
+Description: New York City mental health support and crisis intervention
+Tags: new york, nyc, local, united states
+----------------------------------------
+
+Name: California Peer-Run Warm Line
+Contact: 1-855-845-7415
+Description: Non-emergency support for California residents
+Tags: california, non-emergency, peer support, united states
+----------------------------------------
+
+Name: Chicago Crisis Line
+Contact: 1-800-248-7475
+Description: Crisis intervention for Chicago residents
+Tags: chicago, illinois, local, united states
+----------------------------------------
+
+Name: Samaritans UK
+Contact: 116 123
+Description: 24/7 crisis support throughout United Kingdom
+Tags: uk, united kingdom, england, britain, international
+----------------------------------------
+
+Name: Lifeline Australia
+Contact: 13 11 14
+Description: 24/7 crisis support and suicide prevention in Australia
+Tags: australia, international, suicide
+----------------------------------------
+
+Name: Distress Centres of Canada
+Contact: 1-833-456-4566
+Description: Crisis services across Canada
+Tags: canada, international, crisis
+----------------------------------------
