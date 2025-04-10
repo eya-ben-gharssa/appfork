@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+langchain
+transformers
+sentence-transformers
+chromadb
+requests
+beautifulsoup4
+langchain-community
