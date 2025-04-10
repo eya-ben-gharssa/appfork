@@ -1,11 +1,27 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from app.services.mood_service import get_mood_response
 from pydantic import BaseModel
+from transformers import pipeline
 
 router = APIRouter()
 
+# Load the sentiment analysis pipeline
+try:
+    sentiment_analyzer = pipeline("sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment")
+except Exception as e:
+    print(f"Error loading sentiment model: {e}")
+    # The router will still work but will raise exceptions when the sentiment endpoint is called
+
 class MoodRequest(BaseModel):
     feeling: str
+
+class SentimentRequest(BaseModel):
+    text: str
+
+class SentimentResponse(BaseModel):
+    text: str
+    sentiment: str
+    confidence: float
 
 @router.post("/mood")
 async def mood_chat(request: MoodRequest):
@@ -28,3 +44,23 @@ async def mood_chat(request: MoodRequest):
             "response": result,
             "context": "Context retrieval not available"
         }
+
+@router.post("/analyze-sentiment", response_model=SentimentResponse)
+async def analyze_sentiment(request: SentimentRequest):
+    try:
+        # Get sentiment prediction
+        result = sentiment_analyzer(request.text)
+        
+        # Extract sentiment and confidence
+        sentiment = result[0]['label']
+        confidence = result[0]['score'] * 100  # Convert to percentage
+        
+        sentiment_readable = label_map.get(sentiment, sentiment)
+
+        return SentimentResponse(
+            text=request.text,
+            sentiment=sentiment_readable,
+            confidence=confidence
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing sentiment: {str(e)}")
