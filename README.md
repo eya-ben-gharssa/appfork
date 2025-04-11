@@ -29,7 +29,7 @@ cd Agent-m7ar7er
 ```bash
 cd mood-componion_rag
 pip install -r requirements.txt
-python main.py
+uvicorn main:app --reload
 ```
 
 ### 3. Frontend setup
