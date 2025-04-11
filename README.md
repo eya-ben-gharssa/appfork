@@ -14,7 +14,7 @@ Agent-m7ar7er is an AI-powered assistant designed to support mental health and e
 
 **Frontend**: Nextjs, TypeScript
 **Backend**: Fast api
-**AI Tools**: Ollama, Gemma3, LangChain, RAG
+**AI Tools**: Ollama, Gemma3, LangChain, RAG, HuggingFace
 
 ## 📦 Installation
 
