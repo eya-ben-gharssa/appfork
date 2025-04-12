@@ -7,8 +7,12 @@ from app.core.index import create_vectorstore
 from langchain.chains import RetrievalQA
 from langchain_community.llms import HuggingFaceHub
 import requests
+from dotenv import load_dotenv
+import os
 
-HUGGINGFACE_API_TOKEN = "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"
+load_dotenv()
+
+HUGGINGFACE_API_TOKEN = os.getenv("HUGGINGFACE_API_TOKEN")
 
 # Setup memory
 memory = ConversationBufferMemory(
