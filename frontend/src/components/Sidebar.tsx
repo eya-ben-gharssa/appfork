@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button"
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { useChatContext } from '@/context/chatContext'
+
 
 
 // Function to determine which emoji to display based on sentiment and confidence
@@ -18,6 +18,20 @@ const getMoodEmoji = (sentiment: string, confidence: number) => {
   return "❓";
 };
 
+const getPointColor = (sentiment:string) => {
+  switch (sentiment) {
+    case 'Positive':
+      return 'bg-green-500'; // Green for Positive
+    case 'Neutral':
+      return 'bg-yellow-500'; // Yellow for Neutral
+    case 'Negative':
+      return 'bg-red-500'; // Red for Negative
+    default:
+      return 'bg-gray-400'; // Default for Unknown sentiment
+  }
+};
+
+
 export default function Sidebar() {
   interface SentimentData {
     sentiment: string;
@@ -28,72 +42,89 @@ export default function Sidebar() {
   const [sentimentData, setSentimentData] = useState<SentimentData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { latestRequestId } = useChatContext()
 
-  useEffect(() => {
-    const fetchSentimentData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("http://127.0.0.1:8000/analyze-sentiment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: "I'm feeling good today!" }), // Replace with dynamic text if needed
-        });
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setSentimentData(data);
-        setError(null);
-      } catch (err) {
-        console.error("Failed to fetch sentiment data:", err);
-        setError("Failed to load sentiment analysis. Please try again later.");
-      } finally {
-        setLoading(false);
+  const fetchSentimentAnalysis = useCallback(async () => {
+    try {
+      setLoading(true);
+      const url = latestRequestId
+        ? `http://127.0.0.1:8000/analyze-sentiment?request_id=${latestRequestId}`
+        : 'http://127.0.0.1:8000/analyze-sentiment';
+      
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // Don't need to send a body when using request_id
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
       }
-    };
+      
+      const data = await response.json();
+      setSentimentData(data);
+      setError(null);
+    } catch (err) {
+      console.error("Failed to fetch sentiment data:", err);
+      setError("Failed to load sentiment analysis. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }, [latestRequestId]); // Dependency array goes here as second argument
+  
+  useEffect(() => {
+    if (latestRequestId) {
+      fetchSentimentAnalysis();
+    }
+  }, [latestRequestId, fetchSentimentAnalysis]); // Added fetchSentimentAnalysis to dependencies
 
-    fetchSentimentData();
-  }, []);
-
+  
   return (
-    <div className="w-64 h-screen flex flex-col justify-between bg-white border-r p-4">
-      <div className="flex flex-col items-start space-y-4 mb-4">
-        <Image
-          src="/mood-componion.png"
-          alt="Mood Companion"
-          width={128}
-          height={128}
-          className="rounded-full"
-        />
-      </div>
-      <div>
-        {/* Sentiment Analysis Section */}
-        <div className="my-4 p-3 rounded">
-          {loading && <p className="text-sm text-gray-500">Loading sentiment data...</p>}
-          {error && <p className="text-sm text-red-500">{error}</p>}
-          {sentimentData && !loading && (
-            <div className="text-sm">
-              <div className="text-2xl mb-2 text-center">
-                <p>Mood: {getMoodEmoji(sentimentData.sentiment, sentimentData.confidence)}</p>
-              </div>
-            </div>
-          )}
-        </div>
+    <div className="w-64 h-screen flex flex-col bg-gradient-to-b from-white via-blue-50 to-white border-r shadow-lg p-6 mr-4">
+      {/* Top Logo Section */}
+      <div className="flex flex-col items-center gap-2">
+      <Image
+        src="/mood-componion.png"
+        alt="Mood Companion"
+        width={128}
+        height={128}
+        className="rounded-full border-4 border-blue-200 shadow-md"
+      />
       </div>
 
-      {/* Logout at the bottom */}
-      <ul className="space-y-2">
-        <li>
-          <Button>
-            <Link href="/signin" className="text-red-600 hover:underline">
-            Logout
-            </Link>
-          </Button>
-        </li>
-      </ul>
+      {/* Middle: Sentiment Card */}
+      <div className="flex-1 mt-16">
+      <div className="bg-white shadow-md rounded-xl p-4 text-center hover:shadow-lg">
+        <div className="flex items-center justify-center mb-2 gap-2">
+        {/* Sentiment Indicator Point */}
+        {/* "Your Mood" Text */}
+        <h2 className="text-md font-semibold text-gray-700">Your Mood</h2>
+        {sentimentData && (
+          <div
+            className={`w-4 h-4 rounded-full mr-2 ${getPointColor(sentimentData.sentiment)}`}
+          ></div>
+        )}
+      </div>
+        {loading && (
+          <div className="flex justify-center items-center">
+            <div className="w-6 h-6 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+        {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+        {sentimentData && !loading && (
+        <div className="text-4xl text-center">
+          {getMoodEmoji(sentimentData.sentiment, sentimentData.confidence)}
+        </div>
+        )}
+      </div>
+      </div>
+
+      {/* Bottom: Username */}
+      <div className="text-center text-gray-600 font-medium">
+      <span className="text-blue-400 font-bold">Ezzehi Nour</span>
+      </div>
     </div>
   );
 }
