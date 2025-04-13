@@ -1,4 +1,4 @@
-﻿![Agent-m7ar7er Web App](assets/screenshot.png)
+﻿![Agent-m7ar7er Web App](assets/mood-camponion.png)
 # Agent-m7ar7er
 
 Agent-m7ar7er is an AI-powered assistant designed to support mental health and emotional well-being by offering personalized recommendations based on the user's current mood. Built during a 3-day hackathon, it uses a RAG (Retrieval-Augmented Generation) system to provide accurate and empathetic responses.
