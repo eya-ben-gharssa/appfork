@@ -1,10 +1,6 @@
 # Agent-m7ar7er
 
-Dholi is an AI-powered assistant designed to support mental health and emotional well-being by offering personalized recommendations based on the user's current mood. Developed as part of the Agent-m7ar7er project during a 3-day hackathon, Dholi uses a RAG (Retrieval-Augmented Generation) system to deliver accurate and empathetic responses.
-<br>
-
-﻿![Agent-m7ar7er Web App](assets/mood-camponion.png)
-<br><br>
+this is new feature .
 
 ## 🧠 Features
 
@@ -42,3 +38,4 @@ cd ../frontend
 npm install
 npm run dev
 ```
+
